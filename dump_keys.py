@@ -10,8 +10,11 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %I:%M:%S %p',
     level=logging.DEBUG,
 )
-
-device = frida.get_usb_device()
+try:
+    device = frida.get_usb_device()
+except BaseException: 
+	time.sleep(3)
+	device = frida.get_usb_device()
 scanner = Scan(device.name)
 logging.info(f'Connected to {device.name}')
 logging.info('scanning all processes for the following libraries')
